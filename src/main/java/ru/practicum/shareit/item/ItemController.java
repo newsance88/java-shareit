@@ -1,7 +1,7 @@
 package ru.practicum.shareit.item;
 
-import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
@@ -13,39 +13,35 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/items")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ItemController {
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") Long id) {
-        ItemDto createdItem = itemService.addItem(itemDto, id);
-        return ResponseEntity.ok(createdItem);
+    public ItemDto createItem(@RequestBody @Valid ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") Long id) {
+        return itemService.addItem(itemDto, id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemDto> getItem(@PathVariable Long id) {
-        ItemDto item = itemService.getItem(id);
-        return ResponseEntity.ok(item);
+    public ItemDto getItem(@PathVariable Long id) {
+        return itemService.getItem(id);
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemDto>> getItems(@RequestHeader("X-Sharer-User-Id") Long id) {
-        return ResponseEntity.ok(itemService.getUserItems(id));
+    public List<ItemDto> getItems(@RequestHeader("X-Sharer-User-Id") Long id) {
+        return itemService.getUserItems(id);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ItemDto> updateItem(
+    public ItemDto updateItem(
             @PathVariable Long id,
             @RequestBody ItemDto itemDto,
             @RequestHeader("X-Sharer-User-Id") Long userId) {
-        ItemDto updatedItem = itemService.updateItem(id, itemDto, userId);
-        return ResponseEntity.ok(updatedItem);
+        return itemService.updateItem(id, itemDto, userId);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ItemDto>> searchItems(@RequestParam String text) {
-        List<ItemDto> items = itemService.searchItems(text);
-        return ResponseEntity.ok(items);
+    public List<ItemDto> searchItems(@RequestParam String text) {
+        return itemService.searchItems(text);
     }
 }

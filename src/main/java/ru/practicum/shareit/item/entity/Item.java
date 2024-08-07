@@ -1,8 +1,6 @@
 package ru.practicum.shareit.item.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.practicum.shareit.user.entity.User;
 
@@ -15,17 +13,14 @@ import ru.practicum.shareit.user.entity.User;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(name = "name")
-    @NotBlank
-    String name;
+    private String name;
     @Column(name = "description")
-    @NotBlank
-    String description;
+    private String description;
     @Column(name = "available")
-    @NotNull
-    Boolean available;
+    private Boolean available;
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
-    User owner;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 }

@@ -1,6 +1,6 @@
 package ru.practicum.shareit.user.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -9,7 +9,7 @@ import ru.practicum.shareit.user.entity.User;
 import ru.practicum.shareit.user.repo.UserRepository;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
